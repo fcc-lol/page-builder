@@ -2,15 +2,16 @@
 import { db } from "../../../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
 
-async function fetchFromFirestore(db) {
+async function fetchFromFirestore(db, id) {
   const citiesCol = collection(db, "pages");
   const citySnapshot = await getDocs(citiesCol);
-  const cityList = citySnapshot.docs.map((doc) => doc.data());
-  return cityList;
+  const cityDoc = citySnapshot.docs.find((doc) => doc.id === id);
+  const cityData = cityDoc ? cityDoc.data() : null;
+  return cityData;
 }
 
 export default async function Home({ params, searchParams }) {
-  const firestoreData = await fetchFromFirestore(db);
+  const firestoreData = await fetchFromFirestore(db, params.slug);
 
   return (
     <div>
