@@ -1,6 +1,7 @@
 // app/page.js (or any other page file)
 import { db } from "../../../firebase-config";
 import { collection, getDocs } from "firebase/firestore";
+import PageViewer from "@/components/PageViewer";
 
 async function getPageDataFromFirestore(db, id) {
   const database = collection(db, "pages");
@@ -21,6 +22,7 @@ export default async function Page({ params }) {
 
   return (
     <div>
+      <PageViewer />
       <h1>Params</h1>
       <pre>{JSON.stringify(params, null, 2)}</pre>
       <h1>Firestore</h1>
